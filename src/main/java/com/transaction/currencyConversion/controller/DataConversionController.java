@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.transaction.currencyConversion.entity.DataConversion;
 import com.transaction.currencyConversion.repository.DataConversionRepository;
@@ -28,10 +29,19 @@ public class DataConversionController {
 	// Repository class injection.
 	private DataConversionRepository dataConversionRepository;
 
+	// API implementation
+	/*
+	 * RestTemplate restTemplate = new RestTemplate(); String url =
+	 * "http://api.exchangeratesapi.io/v1/latest?access_key=08d5579656d9bbd7d42473865b3cebe6";
+	 * ResponseEntity<String> response = restTemplate.getForEntity(url,
+	 * String.class);
+	 */
+
 	// The annotation of the method that will be used in the external request, in
 	// the get case to fetch all data conversions.
 	@GetMapping
-	// Creation of the findAll method, which will search the list of all data conversions.
+	// Creation of the findAll method, which will search the list of all data
+	// conversions.
 	public ResponseEntity<List<DataConversion>> getAll() {
 		return ResponseEntity.ok(dataConversionRepository.findAll());
 	}
@@ -56,14 +66,16 @@ public class DataConversionController {
 	}
 
 	// The annotation of the method that will be used in the external request, in
-	// the get case to find a destination currency, has a subpath so as not to duplicate
+	// the get case to find a destination currency, has a subpath so as not to
+	// duplicate
 	// the endpoint.
 	@GetMapping("/destinationCurrency/{destinationCurrency}")
 	// The @PathVariable annotation captures the value coming url.
 	public ResponseEntity<List<DataConversion>> getBydestinationCurrency(@PathVariable String destinationCurrency) {
-		return ResponseEntity.ok(dataConversionRepository.findBydestinationCurrencyContainingIgnoreCase(destinationCurrency));
+		return ResponseEntity
+				.ok(dataConversionRepository.findBydestinationCurrencyContainingIgnoreCase(destinationCurrency));
 	}
-	
+
 	// The annotation of the method that will be used in the external request, in
 	// this case post to register a data conversion.
 	@PostMapping
@@ -74,7 +86,8 @@ public class DataConversionController {
 	}
 
 	// The annotation of the method that will be used in the external request, in
-	// this case delete to delete a data conversion, containing the parameter id of the user to
+	// this case delete to delete a data conversion, containing the parameter id of
+	// the user to
 	// be deleted.
 	@DeleteMapping("/{idConversion}")
 	// The @PathVariable annotation captures the value coming url.

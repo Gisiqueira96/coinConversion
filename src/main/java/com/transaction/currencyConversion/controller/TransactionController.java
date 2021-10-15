@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.transaction.currencyConversion.entity.Transaction;
 import com.transaction.currencyConversion.repository.TransactionRepository;
@@ -24,6 +25,14 @@ public class TransactionController {
 	// Repository class injection.
 	private TransactionRepository transactionRepository;
 
+	// API implementation
+	/*
+	 * RestTemplate restTemplate = new RestTemplate(); String url =
+	 * "http://api.exchangeratesapi.io/v1/latest?access_key=08d5579656d9bbd7d42473865b3cebe6";
+	 * ResponseEntity<String> response = restTemplate.getForEntity(url,
+	 * String.class);
+	 */
+
 	// The annotation of the method that will be used in the external request, in
 	// the get case to fetch all transaction.
 	@GetMapping
@@ -39,8 +48,7 @@ public class TransactionController {
 	@GetMapping("/{idTransaction}")
 	// The @PathVariable annotation captures the value coming url.
 	public ResponseEntity<Transaction> getById(@PathVariable long idTransaction) {
-		return transactionRepository.findById(idTransaction)
-				.map(resp -> ResponseEntity.ok(resp))
+		return transactionRepository.findById(idTransaction).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.badRequest().build());
 	}
 
