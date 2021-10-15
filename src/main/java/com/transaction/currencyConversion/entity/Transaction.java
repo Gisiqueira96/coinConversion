@@ -4,9 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 //The annotation for Spring to understand that this class is an entity.
@@ -31,6 +33,11 @@ public class Transaction {
 	// The annotation to validate that the property is strictly positive.
 	@Positive
 	private double conversionRate;
+
+	// Relationship of tables a conversion data with the result of the transaction
+	@OneToOne
+	@JsonIgnoreProperties("transaction")
+	private DataConversion dataConversion;
 
 	/*
 	 * Class encapsulation, so that the attributes (private) of that class can only

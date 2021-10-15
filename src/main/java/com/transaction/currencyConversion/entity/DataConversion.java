@@ -6,12 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 //The annotation for Spring to understand that this class is an entity.
 @Entity
@@ -39,17 +43,28 @@ public class DataConversion {
 	@Positive
 	private double value;
 
-	// The annotation to validate that the property is not null or has white space.
+	//The annotation to validate that the property is not null or has white space.
 	@NotBlank
 	// The annotation to validate that the property has a minimum and maximum size,
 	// because it does not accept empty.
 	@Size(min = 3, max = 3)
 	private String destinationCurrency;
 
-	// The annotation to validate that the property is working with time
+	//The annotation to validate that the property is working with time.
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date = new java.sql.Date(System.currentTimeMillis());
 
+	//Relationship of tables one user to many conversion data.
+	@ManyToOne
+	@JsonIgnoreProperties("dataConversion")
+	private User user;
+	
+	// Relationship of tables a conversion data with the result of the transaction.
+	@OneToOne
+	@JsonIgnoreProperties("dataConversion")
+	private Transaction transaction;
+	
+	
 	/*
 	 * Class encapsulation, so that the attributes (private) of that class can only
 	 * be accessed by other classes through these methods, controlling access to the
