@@ -35,6 +35,7 @@ public class DataConversion {
 	@Size(min = 3, max = 3)
 	private String currencyOrigin;
 
+	//The annotation to validate that the property is strictly positive.
 	@Positive
 	private double value;
 
