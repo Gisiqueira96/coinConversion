@@ -1,6 +1,7 @@
 package com.transaction.currencyConversion.entity;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 //annotation for Spring to understand that this class is an entity.
-@javax.persistence.Entity
+@Entity
 //annotation for Spring to understand that this entity will be a table within the database and that its name will be: user.
 @Table(name = "user")
 public class User {
